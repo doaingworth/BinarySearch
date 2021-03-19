@@ -22,25 +22,71 @@ private Item[] store =
   new Item(19967, 45)
 };                             
 public int linearSearch(int catNumToFind)
-{
-  //complete this method
-  return -1;
-}
-public int recursiveLinearSearch(int catNumToFind, int startIndex)
-{
-  //complete this method
-  return -1;
-}
-public int binarySearch(int catNumToFind)
-{
-  //complete this method    
-  return -1;
-}
-public int recursiveBinarySearch(int catNumToFind, int nLow, int nHigh)
-{
-  //complete this method    
-  return -1;
-}
+    {
+        for (int x = 0; x < store.length; x++) {
+            if (store[x].getCatNum() == catNumToFind) {
+                return store[x].getInventory();
+            }
+        }
+        return -1;
+    }
+    public int recursiveLinearSearch(int catNumToFind, int startIndex)
+    {
+        if (startIndex >= store.length) {
+            return -1;
+        }
+        else if (catNumToFind == store[startIndex].getCatNum()) {
+            return store[startIndex].getInventory();
+        }
+        else {
+            return recursiveLinearSearch(catNumToFind, startIndex + 1);
+        }
+    }
+    public int binarySearch(int catNumToFind)
+    {
+        //complete this method
+        if (catNumToFind == store[store.length-1].getCatNum()) {
+            return store[store.length-1].getInventory();
+        }
+        int median = store.length/2;
+        for (int x = 2; x < store.length; x++) {
+            if (store[median].getCatNum() == catNumToFind) {
+                return store[median].getInventory();
+            }
+            else if (catNumToFind > store[median].getCatNum()) {
+                median += store.length / Math.pow(2.0, x);
+            }
+            else if (catNumToFind < store[median].getCatNum()) {
+                median -= store.length / Math.pow(2.0, x);
+            }
+        }
+        return -1;
+    }
+    public int recursiveBinarySearch(int catNumToFind, int nLow, int nHigh)
+    {
+        int median = (nLow + nHigh)/2;
+        if (catNumToFind > store[store.length-1].getCatNum()) {
+            return -1;
+        }
+        else if (catNumToFind == store[store.length-1].getCatNum()) {
+            return store[store.length-1].getInventory();
+        }
+        else if (/*Math.abs(nLow - nHigh) == 1 || */Math.abs(nLow - nHigh) == 0) {
+            return -1;
+        }
+        else if (store[median].getCatNum() == catNumToFind) {
+            return store[median].getInventory();
+        }
+        else if (catNumToFind > store[median].getCatNum()) {
+            return recursiveBinarySearch(catNumToFind, median, nHigh);
+        }
+        else if (catNumToFind < store[median].getCatNum()) {
+            return recursiveBinarySearch(catNumToFind, nLow, median);
+        }
+        else {
+            return -1;
+        }
+    }
 public void setup()
 {
   int[] tests = {0, 183, 184, 2370, 15320, 19967, 19968};
